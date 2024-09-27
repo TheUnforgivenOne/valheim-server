@@ -1,0 +1,18 @@
+services:
+  valheim:
+    image: mbround18/valheim:latest
+    stop_signal: SIGINT
+    ports:
+      - "2456:2456/udp"
+      - "2457:2457/udp"
+      - "2458:2458/udp"
+    environment:
+      PORT: 2456
+      NAME: "Test Docker"
+      WORLD: "Dedicated"
+      PASSWORD: "12345"
+      TZ: "Etc/GMT"
+      PUBLIC: 1
+    volumes:
+      - ./valheim/saves:/home/steam/.config/unity3d/IronGate/Valheim
+      - ./valheim/server:/home/steam/valheim
