@@ -1,0 +1,21 @@
+# IDE etc
+.DS_Store
+.idea
+
+# Local .terraform directories
+.terraform
+
+# Lock files
+.terraform.lock.hcl
+
+# State files
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+
+# SSH key
+vh-public.pub
+vh.pem
+
+# Secrets...
+*.env

@@ -1,5 +1,7 @@
 services:
   valheim:
+    env_file:
+      - server.env
     image: mbround18/valheim:latest
     stop_signal: SIGINT
     ports:
@@ -8,9 +10,9 @@ services:
       - "2458:2458/udp"
     environment:
       PORT: 2456
-      NAME: "Test Docker"
-      WORLD: "Dedicated"
-      PASSWORD: "12345"
+      NAME: ${SERVER_NAME}
+      WORLD: ${WORLD_NAME}
+      PASSWORD: ${PASSWORD}
       TZ: "Etc/GMT"
       PUBLIC: 1
     volumes:

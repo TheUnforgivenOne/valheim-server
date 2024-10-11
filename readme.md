@@ -24,3 +24,7 @@ docker attach <name> - attach to <name>
 docker compose up --detach - run compose and detach
 docker exec -it <name> /bin/bash - enter to the <name> command line
 exit - exit shell
+
+## TF configs
+Setup amazon linux instance: terraform plan -var-file="vars/amazon-linux.tfvars"
+Setup ubuntu instance: terraform plan -var-file="vars/ubuntu.tfvars"
