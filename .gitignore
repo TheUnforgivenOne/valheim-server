@@ -7,6 +7,7 @@
 
 # Lock files
 .terraform.lock.hcl
+yarn.lock
 
 # State files
 *.tfstate
@@ -19,3 +20,9 @@ vh.pem
 
 # Secrets...
 *.env
+
+# Dependencies
+node_modules
+
+# Builds
+*dist

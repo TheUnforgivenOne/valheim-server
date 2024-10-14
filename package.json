@@ -1,0 +1,9 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@aws-sdk/client-ec2": "^3.670.0"
+  }
+}
