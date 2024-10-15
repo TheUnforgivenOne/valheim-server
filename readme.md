@@ -11,6 +11,9 @@ ssh -i "vh.pem" ubuntu@ec2-52-19-26-42.eu-west-1.compute.amazonaws.com
 ## Transfer file
 scp -i "vh.pem" ~/Projects/valheim/docker-compose.yml ubuntu@ec2-52-19-26-42.eu-west-1.compute.amazonaws.com:~/
 
+## SSM status check (Ubuntu)
+sudo systemctl status snap.amazon-ssm-agent.amazon-ssm-agent.service
+
 ## Screen
 screen - start new screen
 screen -ls - list of screens

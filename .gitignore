@@ -14,9 +14,8 @@ yarn.lock
 *.tfstate.backup
 *.tfstate.lock.info
 
-# SSH key
-vh-public.pub
-vh.pem
+# SSH keys
+.ssh
 
 # Secrets...
 *.env

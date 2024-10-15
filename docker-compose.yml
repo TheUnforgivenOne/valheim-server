@@ -1,7 +1,5 @@
 services:
   valheim:
-    env_file:
-      - server.env
     image: mbround18/valheim:latest
     stop_signal: SIGINT
     ports:
