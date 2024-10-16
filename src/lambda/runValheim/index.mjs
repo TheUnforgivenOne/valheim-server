@@ -31,7 +31,7 @@ export const handler = async () => {
     InstanceIds: [SERVER_INSTANCE_ID],
     Parameters: {
       commands: [
-        'echo "hello" > test.txt',
+        'sudo docker compose up',
       ],
       workingDirectory: [`/home/${EC2_USER}`],
     },
@@ -39,7 +39,7 @@ export const handler = async () => {
 
   try {
     const result = await client.send(command);
-    
+
     return {
       statusCode: 200,
       data: result

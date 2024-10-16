@@ -345,3 +345,92 @@ resource "aws_lambda_function" "run_valheim_lambda" {
     }
   }
 }
+
+# Gateway
+
+resource "aws_apigatewayv2_api" "valheim_controls" {
+  name          = "valheim_controls"
+  protocol_type = "HTTP"
+}
+
+resource "aws_apigatewayv2_stage" "valheim_controls_dev" {
+  api_id = aws_apigatewayv2_api.valheim_controls.id
+
+  name        = "dev"
+  auto_deploy = true
+}
+
+# Start lambda integration
+
+resource "aws_apigatewayv2_integration" "start_server_invoke" {
+  api_id = aws_apigatewayv2_api.valheim_controls.id
+
+  integration_uri    = aws_lambda_function.start_server_lambda.invoke_arn
+  integration_type   = "AWS_PROXY"
+  integration_method = "POST"
+}
+
+resource "aws_apigatewayv2_route" "start_server_route" {
+  api_id    = aws_apigatewayv2_api.valheim_controls.id
+  route_key = "GET /start"
+  target    = "integrations/${aws_apigatewayv2_integration.start_server_invoke.id}"
+}
+
+resource "aws_lambda_permission" "start_server_invoke_permission" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.start_server_lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.valheim_controls.execution_arn}/*/*"
+}
+
+# Stop lambda integration
+
+resource "aws_apigatewayv2_integration" "stop_server_invoke" {
+  api_id = aws_apigatewayv2_api.valheim_controls.id
+
+  integration_uri    = aws_lambda_function.stop_server_lambda.invoke_arn
+  integration_type   = "AWS_PROXY"
+  integration_method = "POST"
+}
+
+resource "aws_apigatewayv2_route" "stop_server_route" {
+  api_id    = aws_apigatewayv2_api.valheim_controls.id
+  route_key = "GET /stop"
+  target    = "integrations/${aws_apigatewayv2_integration.stop_server_invoke.id}"
+}
+
+resource "aws_lambda_permission" "stop_server_invoke_permission" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.stop_server_lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.valheim_controls.execution_arn}/*/*"
+}
+
+# Run valheim lambda integration
+
+resource "aws_apigatewayv2_integration" "run_valheim_invoke" {
+  api_id = aws_apigatewayv2_api.valheim_controls.id
+
+  integration_uri    = aws_lambda_function.run_valheim_lambda.invoke_arn
+  integration_type   = "AWS_PROXY"
+  integration_method = "POST"
+}
+
+resource "aws_apigatewayv2_route" "run_valheim_route" {
+  api_id    = aws_apigatewayv2_api.valheim_controls.id
+  route_key = "GET /run_valheim"
+  target    = "integrations/${aws_apigatewayv2_integration.run_valheim_invoke.id}"
+}
+
+resource "aws_lambda_permission" "run_valheim_invoke_permission" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.run_valheim_lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.valheim_controls.execution_arn}/*/*"
+}
